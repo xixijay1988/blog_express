@@ -1,0 +1,28 @@
+<%- include header%>
+
+
+
+<div>
+
+    <style type="text/css">
+
+        .form-group{
+            width: 500px;
+            margin: 0 auto;
+        }
+
+    </style>
+
+    <form class="form-group" method="post">
+
+        <label for="inputUsername">Title</label>
+        <br/>
+        <input type="text" class="form-control" name="title" placeholder="Title" required autofocus>
+        <br/>
+        <label for="inputPost">Post</label><br/>
+        <textarea name="article" class="form-control" rows="3"></textarea>
+        <br/>
+        <button type="submit" class="btn btn-primary col-sm-4">Publish</button>
+    </form>
+
+</div>

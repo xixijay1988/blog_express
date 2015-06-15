@@ -1,0 +1,32 @@
+
+<%- include header%>
+<div class="hero-unit">
+
+  <h1>
+    <%- title%>
+  </h1>
+
+  <p>Home Page</p>
+
+  <article>
+    <h3>Post</h3>
+    <% if (success) {%>
+      <div><%= success %></div>
+    <% } %>
+
+    <% if (error) {%>
+      <div><%= error %></div>
+    <% } %>
+
+    <% posts.forEach(function (post, index) { %>
+    <p><h2><a href="#"><%= post.title %></a></h2></p>
+    <p class="info">
+      作者：<a href="#"><%= post.username %></a> |
+      日期：<%= post.time.minute %>
+    </p>
+    <p><%- post.post %></p>
+    <% }) %>
+
+  </article>
+
+</div>
