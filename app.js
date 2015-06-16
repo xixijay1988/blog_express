@@ -12,6 +12,7 @@ var MongoStore = require('connect-mongo')(session);
 var flash = require('connect-flash');
 var users = require('./routes/users');
 var partials = require('express-partials');
+var multer = require('multer');
 
 
 
@@ -77,5 +78,11 @@ app.use(function(err, req, res, next) {
   });
 });
 
+app.use(multer({
+  dest: './public/images',
+  rename: function (fieldname, filename) {
+    return filename;
+  }
+}));
 
 module.exports = app;

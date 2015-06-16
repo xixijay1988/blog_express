@@ -23,7 +23,7 @@ function checkNotLogin(req, res, next) {
 
 /* GET home page. */
 router.get('/', function(req, res) {
-  Post.get(null, function (err, posts) {
+  Post.getAll(null, function (err, posts) {
     if (err) {
       posts = [];
     }
@@ -166,6 +166,68 @@ router.post('/post', function (req, res) {
     req.flash('success', '发布成功!');
     res.redirect('/');//发表成功跳转到主页
   });
+});
+
+//router for username
+//router.get('/u/:username',checkLogin);
+router.get('/u/:username', function(req, res){
+  var username = req.params.username;
+
+  //search username
+  User.get(username, function(err, usr){
+    if(!usr){
+      req.flash('error','User is not Existed!')
+      return res.redirect('/');
+    }
+
+    //search post
+    Post.getAll(username, function(err, posts){
+      if(err){
+        req.flash('error',err);
+        return res.redirect('/');
+      }
+
+      res.render('user',{
+        title: username,
+        posts: posts,
+        user: req.session.user,
+        success: req.flash('success').toString(),
+        error: req.flash('error').toString()
+      });
+    });
+  });
+});
+
+//router for username day title
+//router.get('/u/:username/:day/:title',checkLogin);
+router.get('/u/:username/:day/:title',function(req, res){
+  var username = req.params.username;
+  var day = req.params.day;
+  var title = req.params.title;
+
+  User.get(username, function(err, usr){
+    if(!usr){
+      req.flash('error','User is not Existed!');
+      res.redirect('/');
+    }
+
+    Post.getOne(username,day,title,function(err, post){
+      if(err){
+        req.flash('err', err);
+        res.redirect('/');
+      }
+
+      res.render('article',{
+        title: title,
+        user: req.session.user,
+        post: post,
+        success: req.flash('success').toString(),
+        error: req.flash('error').toString()
+      });
+
+    });
+  });
+
 });
 
 module.exports = router;

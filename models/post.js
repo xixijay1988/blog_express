@@ -3,6 +3,7 @@
  */
 
 var mongodb = require('./db');
+var markdown = require('markdown').markdown;
 
 function Post(username, title, post) {
     this.username = username;
@@ -57,7 +58,7 @@ Post.prototype.save = function(callback) {
 };
 
 //读取文章及其相关信息
-Post.get = function(username, callback) {
+Post.getAll = function(username, callback) {
     //打开数据库
     mongodb.open(function (err, db) {
         if (err) {
@@ -81,8 +82,46 @@ Post.get = function(username, callback) {
                 if (err) {
                     return callback(err);//失败！返回 err
                 }
+                //transfer markdown to html
+                docs.forEach(function (doc) {
+                    doc.post = markdown.toHTML(doc.post);
+                });
                 callback(null, docs);//成功！以数组形式返回查询的结果
             });
         });
     });
+};
+
+Post.getOne = function(username, day, title, callback){
+    //open Mongodb
+    mongodb.open(function(err, db){
+        if(err){
+            return callback(err);
+        }
+
+        //get Posts
+        db.collection('posts', function(err,collection){
+            if(err){
+                mongodb.close();
+                return callback(err);
+            }
+
+            //search by username day tile
+            collection.findOne({
+                "username": username,
+                "time.day": day,
+                "title": title
+            }, function(err, doc){
+                mongodb.close();
+                if(err){
+                    return callback(err);
+                }
+
+                //change into html
+                doc.post = markdown.toHTML(doc.post);
+                callback(null, doc);
+            });
+        });
+    });
+
 };

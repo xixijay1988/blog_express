@@ -13,7 +13,14 @@
 
     </style>
 
-    <form class="form-group" method="post">
+    <script language="javascript">
+        function defineSubmit(btn)
+        {
+            document.postform.submit();
+        }
+    </script>
+
+    <form name="postform" class="form-group" method="post">
 
         <label for="inputUsername">Title</label>
         <br/>
@@ -22,7 +29,7 @@
         <label for="inputPost">Post</label><br/>
         <textarea name="article" class="form-control" rows="3"></textarea>
         <br/>
-        <button type="submit" class="btn btn-primary col-sm-4">Publish</button>
+        <input type="button" class="btn btn-primary col-sm-4" onclick="defineSubmit(this)" value="Publish"/>
     </form>
 
 </div>

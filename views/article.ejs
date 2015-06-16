@@ -1,0 +1,20 @@
+<%- include header%>
+
+<div>
+
+
+    <p>
+
+        Author: <a href="/u/<%= post.username%>">
+            <%= post.username%>
+        </a>
+        Date: <%= post.time.minute%>
+    </p>
+
+    <article>
+
+        <%- post.post%>
+
+    </article>
+
+</div>
