@@ -20,6 +20,9 @@
         }
     </script>
 
+    <script src="/javascripts/markdown.js"></script>
+
+
     <form name="postform" class="form-group" method="post">
 
         <label for="inputUsername">Title</label>
@@ -27,8 +30,31 @@
         <input type="text" class="form-control" name="title" placeholder="Title" required autofocus>
         <br/>
         <label for="inputPost">Post</label><br/>
-        <textarea name="article" class="form-control" rows="3"></textarea>
+        <textarea id="article" name="article" class="form-control" rows="3" oninput="this.editor.update()"></textarea>
         <br/>
+        <label for="postPreview">Preview</label>
+        <br/>
+
+        <div id="preview"></div>
+
+        <script>
+
+            function Editor(input, preview){
+                this.update = function(){
+                    preview.innerHTML = markdown.toHTML(input.value);
+                };
+                input.editor = this;
+                this.update();
+            }
+
+            var $ = function(id) {
+                return document.getElementById(id);
+            };
+
+            new Editor($("article"), $("preview"));
+
+        </script>
+
         <input type="button" class="btn btn-primary col-sm-4" onclick="defineSubmit(this)" value="Publish"/>
     </form>
 

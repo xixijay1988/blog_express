@@ -11,11 +11,20 @@
   <article>
     <h3>Post</h3>
     <% if (success) {%>
-      <div><%= success %></div>
+      <div class="alert alert-success" role="alter">
+        <span class="glyphicon glyphicon-ok" aria-hidden="true"></span>
+        <span class="sr-only">Success</span>
+        <%= success %>
+      </div>
+
     <% } %>
 
     <% if (error) {%>
-      <div><%= error %></div>
+      <div class="alert alert-danger" role="alter">
+        <span class="glyphicon glyphicon-ban-circle" aria-hidden="true"></span>
+        <span class="sr-only">Error</span>
+        <%= error %>
+      </div>
     <% } %>
 
     <% posts.forEach(function (post, index) { %>
